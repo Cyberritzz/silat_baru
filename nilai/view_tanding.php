@@ -1382,7 +1382,7 @@
 <script type="text/javascript">
 	setInterval(function(){
 		$.ajax({
-            url: 'http://localhost/skordigital/nilai/api.php', 
+            url: 'http://localhost/silat/nilai/api.php', 
             data : {'a' : 'get_data_view_tanding', 'id_partai': <?=$_GET["id_partai"]?>},
             type: "GET",
             success: function(obj){
@@ -1474,5 +1474,4 @@
 	</script>
 </body>
 </html>
-
 

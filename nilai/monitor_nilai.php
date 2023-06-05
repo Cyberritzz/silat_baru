@@ -563,7 +563,7 @@
 	
 	setInterval(function(){
 		$.ajax({
-            url: 'http://localhost/skordigital/nilai/api.php', 
+            url: 'http://localhost/silat/nilai/api.php', 
             data : {'a' : 'get_data_view_monitoring', 'id_partai': <?php echo $id_partai; ?>},
             type: "GET",
             success: function(obj){

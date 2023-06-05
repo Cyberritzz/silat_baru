@@ -23,7 +23,7 @@ $tanggal = date("j F Y", strtotime($tgl));
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>FORM NILAI - IPSI Kabupaten Tangerang</title>
+<title>FORM NILAI - PENCAKSILAT BANYUWANGI</title>
 <style type="text/css">
 <!--
 .style2 {color: #FFFFFF; font-weight: bold; }

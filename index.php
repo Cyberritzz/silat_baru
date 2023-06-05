@@ -86,7 +86,7 @@
 
 <!-- start: footer -->
 <div id="footer">
-	<p>Copyleft 2016 <?php echo " - ".date("Y"); ?> <a href="developer.php">IPSI Kabupaten Tangerang</a> </p>
+	<p>Copyleft 2023 <?php echo " - ".date("Y"); ?> <a href="developer.php">Pencak Silat Kabupaten Banyuwangi</a> </p>
 	<!-- end: footer -->
 </div>
 <!-- end: footer -->

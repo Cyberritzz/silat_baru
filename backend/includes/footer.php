@@ -4,7 +4,7 @@
 	<div class="clearfix"></div>	
 	<footer>
 		<p>
-			<span style="text-align:left;float:left">Versi 20.01 &copy; 2020 IPSI Kabupaten Tangerang -<a href="http://google1945.blogspot.com" alt="Yudha Yogasara"> Yudha Yogasara</a></span>			
+			<span style="text-align:left;float:left">Versi 30.1 &copy; 2023 Pencak Silat Kabupaten Banyuwangi -<a href="http://google1945.blogspot.com" alt="Stikom"> Stikom Team</a></span>			
 		</p>
 	</footer>
 		<script src="js/jquery-1.9.1.min.js"></script>
