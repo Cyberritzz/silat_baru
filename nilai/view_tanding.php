@@ -749,26 +749,26 @@
       <td>WASIT</td>
       <td>WASIT</td>
       <td>WASIT</td>
-      <td>WASIT</td>
-      <td>WASIT</td>
+      <td>DEWAN</td>
+      <td>DEWAN</td>
       <td rowspan="2" bgcolor="#F5F5F5" style="font-size: 18px;">BABAK</td>
       <td>WASIT</td>
       <td>WASIT</td>
       <td>WASIT</td>
-      <td>WASIT</td>
-      <td>WASIT</td>
+      <td>DEWAN</td>
+      <td>DEWAN</td>
     </tr>
-    <tr bgcolor="#F5F5F5" class="text-center" style="font-weight: bold;">
+    <tr bgcolor ="#F5F5F5" class="text-center" style="font-weight: bold;">
       <td>JURI 1</td>
       <td>JURI 2</td>
       <td>JURI 3</td>
-      <td>JURI 4</td>
-      <td>JURI 5</td>
+      <td>DEWAN 1</td>
+      <td>DEWAN 2</td>
       <td>JURI 1</td>
       <td>JURI 2</td>
       <td>JURI 3</td>
-      <td>JURI 4</td>
-      <td>JURI 5</td>
+      <td>DEWAN 1</td>
+      <td>DEWAN 2</td>
     </tr>
   </thead>
   <tbody class="content_penilaian">
