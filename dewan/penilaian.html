@@ -25,7 +25,7 @@
                 <table style="width: 100%;" class="table table-bordered">
                     <tr>
                         <th class="nm_merah" style="text-align: center;">Nama Peserta 1</th>
-                        <th></th>
+                        <th style="text-align: center;">halo</th>
                         <th class="nm_biru" style="text-align: center;">Nama Peserta 2</th>
                     </tr>
                     <tr>
@@ -79,54 +79,50 @@
                     </tr>
                     <tr>
                         <td>
-                        	<table style="width: 100%;text-align: center;">
+                        	<table style="width: 100%; text-align: center;">
                         		<tr>
-                            		<td><span class="btn btn-danger" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('1','MERAH')">Pukulan</span></td>
+                            		<td><span class="btn btn-danger" onclick="button_nilai('0','MERAH')">Binaan 1</span></td>
+                            		<td><span class="btn btn-danger" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('-5','MERAH')">Peringatan 1</span></td>
+                            		<td><span class="btn btn-danger" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('-1','MERAH')">Teguran 1</span></td>
                             	</tr>
                             </table>
                         </td>
                         <td style="vertical-align: middle;">
-                            <!-- <span class="btn btn-danger button_minus10" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('-10','MERAH')">-10</span> -->
+                            <span class="btn btn-danger button_minus10" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('3','MERAH')">Jatuhan</span>
                         </td>
                         <td>
                         	<table style="width: 100%;text-align: center;">
                         		<tr>
-                            		<td><span class="btn btn-blue" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('1','BIRU')">Pukulan</span></td>
+                            		<td><span class="btn btn-blue" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('0','BIRU')">Binaan 1</span></td>
+                            		<td><span class="btn btn-blue" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('-5','BIRU')">Peringatan 1</span></td>
+                            		<td><span class="btn btn-blue" onclick="button_nilai('-1','BIRU')">Teguran 1</span></td>
                             	</tr>
                             </table>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                        	<table style="width: 100%;text-align: center;">
-                        		<tr>
-		                            <td></td>
-		                        </tr>
-		                    </table>
-                        </td>
-                        <td></td>
-                        <td>
-                        	<table style="width: 100%;text-align: center;">
-                        		<tr>
-                                    <td style="padding:20px;"></td>
-                            	</tr>
-                            </table>
+                        	<div class="oke" style="padding: 20px;"></div>
                         </td>
                         <tr>
                         <td>
                         	<table style="width: 100%;text-align: center;">
                         		<tr>
-		                            <td><span class="btn btn-danger" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('2','MERAH')">Tendangan</span></td>
+                        			<td><span class="btn btn-danger" onclick="button_nilai('0','MERAH')">Binaan 2</span></td>
+		                            <td><span class="btn btn-danger" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('-10','MERAH')">Peringatan 1</span></td>
+		                            <td><span class="btn btn-danger" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('-2','MERAH')">Teguran 2</span></td>
 		                         </tr>
 		                    </table>
                         </td>
                         <td>
-                            <!-- <span class="btn btn-blue button_minus10" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('-10','BIRU')">-10</span> -->
+                            <span class="btn btn-blue button_minus10" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('3','BIRU')">Jatuhan </span>
                         </td>
                         <td>
                         	<table style="width: 100%;text-align: center;">
                         		<tr>
-                        			<td><span class="btn btn-blue" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('2','BIRU')">Tendangan</span></td>
+                        			<td><span class="btn btn-blue" style="padding-left: 25px;padding-right: 25px;" onclick="button_nilai('0','BIRU')">Binaan 2</span></td>
+                        			<td><span class="btn btn-blue" style="padding-left: 20px;padding-right: 20px;" onclick="button_nilai('-10','BIRU')">Peringatan 2</span></td>
+                        			<td><span class="btn btn-blue" onclick="button_nilai('-2','BIRU')">Teguran 2</span></td>
                         		</tr>
                         	</table>
                         </td>
@@ -139,8 +135,7 @@
     <style type="text/css">
 
         .btn-danger, .btn-blue{
-            width: 100%;
-            padding: 20px 100px;
+            padding: 14px 9px;
         }
 
         .nm_merah, .kontingen_merah {
@@ -239,8 +234,8 @@
 
             switch(button)
             {
-                case '1':
-                    nilai = 1;
+                case '0':
+                    nilai = 0;
                 break;
                 case '2':
                     nilai = 2;
