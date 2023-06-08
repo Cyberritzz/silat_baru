@@ -29,10 +29,10 @@
                 </h4>
                 <center><a href="index.html" class="btn btn-danger" role="button">RELOAD DATA PARTAI</a></center><br>
                 <select class="form-control" id="partai" name="partai">
-                    <option value=""> -- Partai -- </option>
+                    <option value=""> -- Pilih Partai -- </option>
                 </select>
                 <select class="form-control" id="juri" name="juri">
-                    <option value=""> -- Wasit Juri -- </option>
+                    <option value=""> -- Pilih Juri -- </option>
                 </select>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password"
                     value="password" required="" />
@@ -66,7 +66,7 @@
                     crossDomain: true,
                     success: function (obj) {
 
-                        var html = "<option value=\"\"> -- Partai -- </option>";
+                        var html = "<option value=\"\"> -- Pilih Partai -- </option>";
 
                         $.each(obj, function (key, value) {
 
@@ -86,12 +86,13 @@
                     crossDomain: true,
                     success: function (obj) {
 
-                        var html = "<option value=\"\"> -- Wasit Juri -- </option>";
+                        var html = "<option value=\"\"> -- Pilih Juri -- </option>";
 
                         $.each(obj, function (key, value) {
+                            if (value.name.startsWith("JURI")) {
                             html += "<option value=\"" + value.id + "\">" + value.name + "</option>";
-
-                        })
+                            }
+                        });
 
                         $("#juri").html(html);
                     }

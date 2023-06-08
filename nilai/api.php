@@ -205,8 +205,8 @@ function get_data_view_monitoring()
 			<td colspan="2">JURI 1</td>
 			<td colspan="2" bgcolor="#e6e6e6">JURI 2</td>
 			<td colspan="2">JURI 3</td>
-			<td colspan="2" bgcolor="#e6e6e6">JURI 4</td>
-			<td colspan="2">JURI 5</td>
+			<td colspan="2" bgcolor="#e6e6e6">DEWAN 1</td>
+			<td colspan="2">DEWAN 2</td>
 		</tr>
 		<tr class="text-center">
 			<td bgcolor="#ff4d4d">M</td>
@@ -367,8 +367,8 @@ function get_data_view_monitoring()
 			<td colspan="2">JURI 1</td>
 			<td colspan="2" bgcolor="#e6e6e6">JURI 2</td>
 			<td colspan="2">JURI 3</td>
-			<td colspan="2" bgcolor="#e6e6e6">JURI 4</td>
-			<td colspan="2">JURI 5</td>
+			<td colspan="2" bgcolor="#e6e6e6">DEWAN 1</td>
+			<td colspan="2">DEWAN 2</td>
 		</tr>
 		<tr class="text-center">
 			<td bgcolor="#ff4d4d">M</td>
@@ -530,8 +530,8 @@ function get_data_view_monitoring()
 			<td colspan="2">JURI 1</td>
 			<td colspan="2" bgcolor="#e6e6e6">JURI 2</td>
 			<td colspan="2">JURI 3</td>
-			<td colspan="2" bgcolor="#e6e6e6">JURI 4</td>
-			<td colspan="2">JURI 5</td>
+			<td colspan="2" bgcolor="#e6e6e6">DEWAN 1</td>
+			<td colspan="2">DEWAN 2</td>
 		</tr>
 		<tr class="text-center">
 			<td bgcolor="#ff4d4d">M</td>
