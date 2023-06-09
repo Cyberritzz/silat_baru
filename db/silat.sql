@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 31, 2019 at 11:26 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 5.6.36
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 09 Jun 2023 pada 15.37
+-- Versi server: 10.4.22-MariaDB
+-- Versi PHP: 8.0.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `skordigital`
+-- Database: `silat`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Struktur dari tabel `admin`
 --
 
 CREATE TABLE `admin` (
@@ -35,7 +34,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `admin`
+-- Dumping data untuk tabel `admin`
 --
 
 INSERT INTO `admin` (`userID`, `username`, `password`) VALUES
@@ -44,7 +43,7 @@ INSERT INTO `admin` (`userID`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal_tanding`
+-- Struktur dari tabel `jadwal_tanding`
 --
 
 CREATE TABLE `jadwal_tanding` (
@@ -64,10 +63,28 @@ CREATE TABLE `jadwal_tanding` (
   `aktif` varchar(2) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `jadwal_tanding`
+--
+
+INSERT INTO `jadwal_tanding` (`id_partai`, `tgl`, `kelas`, `gelanggang`, `partai`, `nm_merah`, `kontingen_merah`, `nm_biru`, `kontingen_biru`, `status`, `pemenang`, `babak`, `medali`, `aktif`) VALUES
+(3, '0000-00-00', 'A Putra Dewasa', 'A', '1', 'BALMOND', 'jepang', 'MARTIS', 'thailand', '( 0-0 )', 'MARTIS (thailand)', 'PENYISIHAN', '0', '0'),
+(4, '2017-12-01', 'A PUTRA DEWASA', 'A', '1', 'Yudha', 'Setia Hati Organisasi', 'Yogasara', 'Tapak Suci', '-', '-', 'PENYISIHAN', '0', '1'),
+(5, '2017-12-01', 'A PUTRA DEWASA', 'A', '2', 'Eman', 'Matahari', 'Rizki', 'Setia hati terate', '-', '-', 'PENYISIHAN', '0', '0'),
+(6, '2017-12-01', 'A PUTRA DEWASA', 'A', '3', 'Sapta', 'Perisai Diri', 'Lubix', 'Setia hati organisasi', '-', '-', 'PENYISIHAN', '0', '0'),
+(7, '2017-12-01', 'A PUTRA DEWASA', 'A', '4', 'Muklis', 'Setia hati terate', 'Rizal', 'Tapak Suci', '-', '-', 'PENYISIHAN', '0', '0'),
+(8, '2017-12-01', 'A PUTRA DEWASA', 'A', '5', 'Roma', 'Canda Birawa', 'Ramli', 'Perisai Diri', '-', '-', 'PEREMPAT FINAL', '0', '0'),
+(9, '2017-12-01', 'A PUTRA DEWASA', 'A', '6', 'Irama', 'Matahari', 'Robi', 'Setia hati terate', '-', '-', 'PEREMPAT FINAL', '0', '1'),
+(10, '2017-12-01', 'A PUTRA DEWASA', 'A', '7', 'Isran', 'Perisai Diri', 'Suganda', 'Canda Birawa', '-', '-', 'SEMIFINAL', '0', '0'),
+(11, '2017-12-01', 'A PUTRA DEWASA', 'A', '8', 'Azis', 'Setia hati terate', 'Reza', 'Tapak Suci', '-', '-', 'SEMIFINAL', '0', '1'),
+(12, '2017-12-01', 'A PUTRA DEWASA', 'A', '9', 'Gagap', 'Setia Hati Organisasi', 'Oktavianus', 'Matahari', '-', '-', 'FINAL', '3', '0'),
+(13, '2023-06-05', 'A PUTRA DEWASA', 'A', '10', 'Brian', 'Setia Hati Organisasi', 'Gamma', 'Perisai Diri', '( 0-1 )', 'Gamma (Perisai Diri)', 'FINAL', '0', '0'),
+(14, '0000-00-00', 'A Putra Dewasa', 'SI', '1', 'HARIS', 'jepang', 'WIDI', 'thailand', '-', '-', 'PENYISIHAN', '0', '1');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal_tgr`
+-- Struktur dari tabel `jadwal_tgr`
 --
 
 CREATE TABLE `jadwal_tgr` (
@@ -82,7 +99,7 @@ CREATE TABLE `jadwal_tgr` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelastanding`
+-- Struktur dari tabel `kelastanding`
 --
 
 CREATE TABLE `kelastanding` (
@@ -91,7 +108,7 @@ CREATE TABLE `kelastanding` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `kelastanding`
+-- Dumping data untuk tabel `kelastanding`
 --
 
 INSERT INTO `kelastanding` (`ID_kelastanding`, `nm_kelastanding`) VALUES
@@ -109,7 +126,7 @@ INSERT INTO `kelastanding` (`ID_kelastanding`, `nm_kelastanding`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `konfirmasi`
+-- Struktur dari tabel `konfirmasi`
 --
 
 CREATE TABLE `konfirmasi` (
@@ -130,7 +147,7 @@ CREATE TABLE `konfirmasi` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `medali`
+-- Struktur dari tabel `medali`
 --
 
 CREATE TABLE `medali` (
@@ -142,10 +159,18 @@ CREATE TABLE `medali` (
   `id_partai_FK` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `medali`
+--
+
+INSERT INTO `medali` (`id_medali`, `nama`, `kontingen`, `kelas`, `medali`, `id_partai_FK`) VALUES
+(1, 'Oktavianus', 'Matahari', 'A PUTRA DEWASA', 'Perak', '12'),
+(2, 'Gagap', 'Setia Hati Organisasi', 'A PUTRA DEWASA', 'Emas', '12');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nilai_atlet`
+-- Struktur dari tabel `nilai_atlet`
 --
 
 CREATE TABLE `nilai_atlet` (
@@ -157,10 +182,20 @@ CREATE TABLE `nilai_atlet` (
   `nilai` varchar(5) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `nilai_atlet`
+--
+
+INSERT INTO `nilai_atlet` (`id_nilaiatlet`, `no_partai`, `nama`, `kontingen`, `hukuman`, `nilai`) VALUES
+(3, '1', 'BALMOND', 'jepang', '-3', '3'),
+(4, '1', 'MARTIS', 'thailand', '-1', '20'),
+(5, '10', 'Brian', 'Setia Hati Organisasi', '-4', '12'),
+(6, '10', 'Gamma', 'Perisai Diri', '-8', '15');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nilai_ganda`
+-- Struktur dari tabel `nilai_ganda`
 --
 
 CREATE TABLE `nilai_ganda` (
@@ -181,7 +216,7 @@ CREATE TABLE `nilai_ganda` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nilai_regu`
+-- Struktur dari tabel `nilai_regu`
 --
 
 CREATE TABLE `nilai_regu` (
@@ -210,7 +245,7 @@ CREATE TABLE `nilai_regu` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nilai_tanding`
+-- Struktur dari tabel `nilai_tanding`
 --
 
 CREATE TABLE `nilai_tanding` (
@@ -223,10 +258,115 @@ CREATE TABLE `nilai_tanding` (
   `babak` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `nilai_tanding`
+--
+
+INSERT INTO `nilai_tanding` (`id_nilai`, `id_jadwal`, `id_juri`, `button`, `nilai`, `sudut`, `babak`) VALUES
+(3, '3', '1', '1', 1, 'MERAH', '1'),
+(4, '3', '1', '1+1', 2, 'MERAH', '1'),
+(5, '3', '1', '-1', -1, 'MERAH', '1'),
+(6, '3', '1', '-1', -1, 'BIRU', '1'),
+(7, '3', '1', '1+1', 2, 'BIRU', '1'),
+(8, '3', '1', '1+2', 3, 'BIRU', '1'),
+(9, '3', '1', '2', 2, 'BIRU', '1'),
+(10, '3', '1', '1+3', 4, 'BIRU', '1'),
+(11, '3', '1', '1', 1, 'MERAH', '2'),
+(12, '3', '1', '1+1', 2, 'MERAH', '2'),
+(13, '3', '1', '-2', -2, 'MERAH', '2'),
+(14, '3', '1', '1+2', 3, 'BIRU', '2'),
+(15, '3', '1', '1+3', 4, 'BIRU', '2'),
+(16, '3', '1', '3', 3, 'BIRU', '2'),
+(17, '13', '1', '1', 1, 'MERAH', '1'),
+(18, '13', '1', '1+1', 2, 'MERAH', '1'),
+(19, '13', '1', '-1', -1, 'MERAH', '1'),
+(20, '13', '1', '-1', -1, 'BIRU', '1'),
+(21, '13', '1', '1+1', 2, 'BIRU', '1'),
+(22, '13', '1', '1', 1, 'BIRU', '1'),
+(23, '13', '1', '1+2', 3, 'BIRU', '1'),
+(24, '13', '1', '-2', -2, 'BIRU', '1'),
+(25, '13', '1', '1+2', 3, 'BIRU', '1'),
+(26, '13', '1', '2', 2, 'BIRU', '1'),
+(27, '13', '1', '1+2', 3, 'MERAH', '1'),
+(28, '13', '1', '1+1', 2, 'MERAH', '1'),
+(29, '13', '1', '-1', -1, 'MERAH', '2'),
+(30, '13', '1', '1+1', 2, 'MERAH', '2'),
+(31, '13', '1', '1', 1, 'MERAH', '2'),
+(32, '13', '1', '2', 2, 'MERAH', '2'),
+(33, '13', '1', '1+2', 3, 'MERAH', '2'),
+(34, '13', '1', '-2', -2, 'MERAH', '2'),
+(35, '13', '1', '1+1', 2, 'BIRU', '2'),
+(36, '13', '1', '1+2', 3, 'BIRU', '2'),
+(37, '13', '1', '1+3', 4, 'BIRU', '2'),
+(38, '13', '1', '3', 3, 'BIRU', '2'),
+(39, '13', '1', '-2', -2, 'BIRU', '2'),
+(40, '13', '1', '-1', -1, 'BIRU', '2'),
+(41, '13', '1', '-2', -2, 'BIRU', '2'),
+(59, '4', '1', '1', 1, 'MERAH', '1'),
+(60, '4', '1', '1', 1, 'BIRU', '1'),
+(61, '4', '1', '1', 1, 'MERAH', '1'),
+(62, '4', '1', '1', 1, 'BIRU', '1'),
+(63, '4', '1', '1', 1, 'BIRU', '1'),
+(64, '4', '1', '2', 2, 'BIRU', '1'),
+(65, '4', '1', '1', 1, 'BIRU', '1'),
+(66, '4', '1', '2', 2, 'BIRU', '1'),
+(67, '4', '1', '1', 1, 'BIRU', '1'),
+(68, '4', '1', '2', 2, 'BIRU', '1'),
+(69, '4', '2', '1', 1, 'MERAH', '1'),
+(70, '4', '2', '1', 1, 'BIRU', '1'),
+(71, '4', '2', '2', 2, 'BIRU', '1'),
+(72, '4', '2', '2', 2, 'MERAH', '1'),
+(73, '4', '2', '2', 2, 'MERAH', '1'),
+(74, '4', '2', '2', 2, 'MERAH', '1'),
+(75, '4', '2', '2', 2, 'MERAH', '1'),
+(76, '4', '2', '2', 2, 'MERAH', '1'),
+(77, '4', '2', '2', 2, 'MERAH', '1'),
+(78, '4', '2', '2', 2, 'MERAH', '1'),
+(79, '4', '2', '2', 2, 'BIRU', '1'),
+(80, '4', '2', '2', 2, 'BIRU', '1'),
+(81, '4', '2', '2', 2, 'BIRU', '1'),
+(84, '4', '2', '2', 2, 'BIRU', '1'),
+(85, '4', '2', '2', 2, 'BIRU', '1'),
+(86, '4', '2', '2', 2, 'BIRU', '1'),
+(87, '4', '3', '1', 1, 'MERAH', '1'),
+(88, '4', '3', '1', 1, 'MERAH', '1'),
+(89, '4', '3', '1', 1, 'MERAH', '1'),
+(90, '4', '3', '1', 1, 'MERAH', '1'),
+(91, '4', '3', '1', 1, 'MERAH', '1'),
+(92, '4', '3', '1', 1, 'BIRU', '1'),
+(93, '4', '3', '1', 1, 'BIRU', '1'),
+(94, '4', '3', '1', 1, 'BIRU', '1'),
+(95, '4', '3', '2', 2, 'BIRU', '1'),
+(96, '4', '3', '2', 2, 'MERAH', '1'),
+(97, '4', '3', '1', 1, 'MERAH', '1'),
+(98, '4', '4', '-1', -1, 'MERAH', '1'),
+(99, '4', '4', '3', 3, 'MERAH', '1'),
+(100, '4', '4', '-5', -5, 'MERAH', '1'),
+(101, '4', '4', '-5', -5, 'BIRU', '1'),
+(102, '4', '4', '-2', -2, 'BIRU', '1'),
+(103, '4', '4', '0', 0, 'BIRU', '1'),
+(104, '4', '4', '3', 3, 'MERAH', '1'),
+(105, '11', '1', '1', 1, 'MERAH', '1'),
+(106, '11', '1', '2', 2, 'MERAH', '1'),
+(107, '11', '1', '1', 1, 'BIRU', '1'),
+(108, '11', '1', '2', 2, 'BIRU', '1'),
+(109, '11', '1', '1', 1, 'BIRU', '1'),
+(110, '11', '1', '1', 1, 'BIRU', '1'),
+(111, '11', '1', '1', 1, 'MERAH', '1'),
+(112, '11', '1', '1', 1, 'MERAH', '1'),
+(113, '11', '1', '1', 1, 'BIRU', '1'),
+(114, '11', '2', '1', 1, 'BIRU', '1'),
+(115, '11', '2', '1', 1, 'MERAH', '1'),
+(116, '11', '2', '1', 1, 'BIRU', '1'),
+(179, '14', '1', '2', 2, 'MERAH', '1'),
+(180, '14', '1', '1', 1, 'MERAH', '1'),
+(183, '14', '1', '1', 1, 'MERAH', '1'),
+(186, '14', '1', '2', 2, 'BIRU', '1');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nilai_tunggal`
+-- Struktur dari tabel `nilai_tunggal`
 --
 
 CREATE TABLE `nilai_tunggal` (
@@ -258,7 +398,7 @@ CREATE TABLE `nilai_tunggal` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `peserta`
+-- Struktur dari tabel `peserta`
 --
 
 CREATE TABLE `peserta` (
@@ -286,7 +426,7 @@ CREATE TABLE `peserta` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `undian`
+-- Struktur dari tabel `undian`
 --
 
 CREATE TABLE `undian` (
@@ -298,7 +438,7 @@ CREATE TABLE `undian` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `undian_tgr`
+-- Struktur dari tabel `undian_tgr`
 --
 
 CREATE TABLE `undian_tgr` (
@@ -310,7 +450,18 @@ CREATE TABLE `undian_tgr` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wasit_juri`
+-- Struktur dari tabel `waktu_habis`
+--
+
+CREATE TABLE `waktu_habis` (
+  `waktu_expired` int(10) DEFAULT NULL,
+  `waktu_input` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `wasit_juri`
 --
 
 CREATE TABLE `wasit_juri` (
@@ -320,200 +471,200 @@ CREATE TABLE `wasit_juri` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `wasit_juri`
+-- Dumping data untuk tabel `wasit_juri`
 --
 
 INSERT INTO `wasit_juri` (`id_juri`, `nm_juri`, `pass_juri`) VALUES
 (1, 'JURI 1', '5f4dcc3b5aa765d61d8327deb882cf99'),
 (2, 'JURI 2', '5f4dcc3b5aa765d61d8327deb882cf99'),
 (3, 'JURI 3', '5f4dcc3b5aa765d61d8327deb882cf99'),
-(4, 'JURI 4', '5f4dcc3b5aa765d61d8327deb882cf99'),
-(5, 'JURI 5', '5f4dcc3b5aa765d61d8327deb882cf99');
+(4, 'DEWAN 1', '5f4dcc3b5aa765d61d8327deb882cf99'),
+(5, 'DEWAN 2', '5f4dcc3b5aa765d61d8327deb882cf99');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
+-- Indeks untuk tabel `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`userID`);
 
 --
--- Indexes for table `jadwal_tanding`
+-- Indeks untuk tabel `jadwal_tanding`
 --
 ALTER TABLE `jadwal_tanding`
   ADD PRIMARY KEY (`id_partai`);
 
 --
--- Indexes for table `jadwal_tgr`
+-- Indeks untuk tabel `jadwal_tgr`
 --
 ALTER TABLE `jadwal_tgr`
   ADD PRIMARY KEY (`id_partai`);
 
 --
--- Indexes for table `kelastanding`
+-- Indeks untuk tabel `kelastanding`
 --
 ALTER TABLE `kelastanding`
   ADD PRIMARY KEY (`ID_kelastanding`);
 
 --
--- Indexes for table `konfirmasi`
+-- Indeks untuk tabel `konfirmasi`
 --
 ALTER TABLE `konfirmasi`
   ADD PRIMARY KEY (`ID_konfirmasi`);
 
 --
--- Indexes for table `medali`
+-- Indeks untuk tabel `medali`
 --
 ALTER TABLE `medali`
   ADD PRIMARY KEY (`id_medali`);
 
 --
--- Indexes for table `nilai_atlet`
+-- Indeks untuk tabel `nilai_atlet`
 --
 ALTER TABLE `nilai_atlet`
   ADD PRIMARY KEY (`id_nilaiatlet`);
 
 --
--- Indexes for table `nilai_ganda`
+-- Indeks untuk tabel `nilai_ganda`
 --
 ALTER TABLE `nilai_ganda`
   ADD PRIMARY KEY (`id_nilai`);
 
 --
--- Indexes for table `nilai_regu`
+-- Indeks untuk tabel `nilai_regu`
 --
 ALTER TABLE `nilai_regu`
   ADD PRIMARY KEY (`id_nilai`);
 
 --
--- Indexes for table `nilai_tanding`
+-- Indeks untuk tabel `nilai_tanding`
 --
 ALTER TABLE `nilai_tanding`
   ADD PRIMARY KEY (`id_nilai`);
 
 --
--- Indexes for table `nilai_tunggal`
+-- Indeks untuk tabel `nilai_tunggal`
 --
 ALTER TABLE `nilai_tunggal`
   ADD PRIMARY KEY (`id_nilai`);
 
 --
--- Indexes for table `peserta`
+-- Indeks untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
   ADD PRIMARY KEY (`ID_peserta`);
 
 --
--- Indexes for table `undian`
+-- Indeks untuk tabel `undian`
 --
 ALTER TABLE `undian`
   ADD PRIMARY KEY (`id_undian`);
 
 --
--- Indexes for table `undian_tgr`
+-- Indeks untuk tabel `undian_tgr`
 --
 ALTER TABLE `undian_tgr`
   ADD PRIMARY KEY (`id_undiantgr`);
 
 --
--- Indexes for table `wasit_juri`
+-- Indeks untuk tabel `wasit_juri`
 --
 ALTER TABLE `wasit_juri`
   ADD PRIMARY KEY (`id_juri`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT untuk tabel `admin`
 --
 ALTER TABLE `admin`
   MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `jadwal_tanding`
+-- AUTO_INCREMENT untuk tabel `jadwal_tanding`
 --
 ALTER TABLE `jadwal_tanding`
-  MODIFY `id_partai` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_partai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `jadwal_tgr`
+-- AUTO_INCREMENT untuk tabel `jadwal_tgr`
 --
 ALTER TABLE `jadwal_tgr`
   MODIFY `id_partai` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `kelastanding`
+-- AUTO_INCREMENT untuk tabel `kelastanding`
 --
 ALTER TABLE `kelastanding`
   MODIFY `ID_kelastanding` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `konfirmasi`
+-- AUTO_INCREMENT untuk tabel `konfirmasi`
 --
 ALTER TABLE `konfirmasi`
   MODIFY `ID_konfirmasi` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `medali`
+-- AUTO_INCREMENT untuk tabel `medali`
 --
 ALTER TABLE `medali`
-  MODIFY `id_medali` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_medali` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `nilai_atlet`
+-- AUTO_INCREMENT untuk tabel `nilai_atlet`
 --
 ALTER TABLE `nilai_atlet`
-  MODIFY `id_nilaiatlet` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nilaiatlet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `nilai_ganda`
+-- AUTO_INCREMENT untuk tabel `nilai_ganda`
 --
 ALTER TABLE `nilai_ganda`
   MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nilai_regu`
+-- AUTO_INCREMENT untuk tabel `nilai_regu`
 --
 ALTER TABLE `nilai_regu`
   MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nilai_tanding`
+-- AUTO_INCREMENT untuk tabel `nilai_tanding`
 --
 ALTER TABLE `nilai_tanding`
-  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 
 --
--- AUTO_INCREMENT for table `nilai_tunggal`
+-- AUTO_INCREMENT untuk tabel `nilai_tunggal`
 --
 ALTER TABLE `nilai_tunggal`
   MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `peserta`
+-- AUTO_INCREMENT untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
   MODIFY `ID_peserta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `undian`
+-- AUTO_INCREMENT untuk tabel `undian`
 --
 ALTER TABLE `undian`
   MODIFY `id_undian` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `undian_tgr`
+-- AUTO_INCREMENT untuk tabel `undian_tgr`
 --
 ALTER TABLE `undian_tgr`
   MODIFY `id_undiantgr` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `wasit_juri`
+-- AUTO_INCREMENT untuk tabel `wasit_juri`
 --
 ALTER TABLE `wasit_juri`
   MODIFY `id_juri` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;

@@ -713,9 +713,8 @@ $biruj5p1plus3 = mysqli_fetch_array($countbiruj5p1plus3);
 				<thead>
 					<tr>
 						<td colspan="6" rowspan="3">
-							<h1 class="waktu" style="font-size: 50px">00:00</h1>
-							<button onclick="init_start(90)">1,5 Menit</button>
-							<button onclick="init_start(120)">2 Menit</button>
+						<h1 class="waktu" style="font-size: 50px">00:00</h1>
+        <input type="number" id="durationInput" placeholder="Duration in seconds">
 						</td>
 					</tr>
 					<tr class="text-right">
@@ -731,11 +730,11 @@ $biruj5p1plus3 = mysqli_fetch_array($countbiruj5p1plus3);
 					</tr>
 					<tr>
 						<td colspan="6">
-							<!-- <h1 class="btn btn-success btn-xs" onclick="init_start()"
-								style="margin-bottom:10px;margin-top:0;"> START</h1> -->
-							<h1 class="btn btn-warning btn-xs btn-stop" onclick="resume_time()"
+							<h1 class="btn btn-success btn-xs" onclick="initStart()"
+								style="margin-bottom:10px;margin-top:0;"> START</h1>
+							<h1 class="btn btn-warning btn-xs btn-stop" onclick="resumeTime()"
 								style="margin-bottom:10px;margin-top:0;"> PAUSE</h1>
-							<h1 class="btn btn-danger btn-xs" onclick="stop_time()"
+							<h1 class="btn btn-danger btn-xs" onclick="stopTime()"
 								style="margin-bottom:10px;margin-top:0;"> STOP</h1>
 						</td>
 						<td colspan="5" class="text-right" style="font-size: 28px; font-weight: bold;">
@@ -1476,7 +1475,7 @@ $biruj5p1plus3 = mysqli_fetch_array($countbiruj5p1plus3);
 	<script type="text/javascript">
 		setInterval(function () {
 			$.ajax({
-				url: 'http://localhost/silat/nilai/api.php',
+				url: 'http://192.168.0.155/silat/nilai/api.php',
 				data: { 'a': 'get_data_view_tanding', 'id_partai': <?= $_GET["id_partai"] ?> },
 				type: "GET",
 				success: function (obj) {

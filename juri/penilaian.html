@@ -11,8 +11,8 @@
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
 
     <link rel='stylesheet prefetch' href='bootstrap/dist/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="login-assets/css/style.css">
-
+    <link rel="stylesheet" href="login-assets/css/style.css">   
+    <script src="../js/timer.js"></script>
     <title>Aplikasi Wasit Juri - Kabupaten Banyuwangi</title>
 </head>
 
@@ -188,7 +188,17 @@
     </audio>
 
     <script type="text/javascript">
-            
+        var eventSource = new EventSource('../server_timer.php');
+
+        eventSource.onmessage = function(event) {
+        var data = JSON.parse(event.data);
+        var minutes = data.minutes;
+        var seconds = data.seconds;
+
+        // Memperbarui tampilan waktu pada halaman
+        $('.waktu').html(minutes + ':' + seconds);
+        };
+
         $(".my_audio").trigger('load');
         
         function play_audio(task)
@@ -200,7 +210,7 @@
           
         }
 
-        var url_api = 'http://localhost/silat/nilai/api.php';
+        var url_api = 'http://192.168.0.155/silat/nilai/api.php';
         
         var id_juri     = window.localStorage.getItem('juri');
         var id_partai   = window.localStorage.getItem('partai'); 

@@ -1,44 +1,51 @@
-// timer.js
-var var_start_timer = true;
-var var_stop = false;
+var varStartTimer = true;
+var varStop = false;
 var interval = "";
 
-var resume_time = function() {
-  if (var_stop) {
+function resumeTime() {
+  if (varStop) {
     return false;
   }
-  if (var_start_timer) {
+  if (varStartTimer) {
     $('.btn-stop').html(' RESUME');
-    var_start_timer = false;
+    varStartTimer = false;
   } else {
-    var_start_timer = true;
+    varStartTimer = true;
     $('.btn-stop').html(' PAUSE');
   }
 }
 
-function stop_time() {
-  var_stop = true;
+function stopTime() {
+  varStop = true;
   $(".waktu").html("00:00");
   clearInterval(interval);
 }
 
-function init_start(duration) {
+function initStart() {
+  var durationInput = document.getElementById("durationInput");
+  var duration = parseInt(durationInput.value);
+
+  if (isNaN(duration) || duration <= 0) {
+    alert("Please enter a valid duration in seconds.");
+    return;
+  }
+
   clearInterval(interval);
-  var_stop = false;
-  var_start_timer = true;
-  start_time(duration);
+  varStop = false;
+  varStartTimer = true;
+  startTime(duration);
 }
 
-function start_time(duration) {
+function startTime(duration) {
   var timer = duration,
     minutes, seconds;
 
   interval = setInterval(function() {
-    if (var_stop) {
+    if (varStop) {
       return false;
     }
 
-    if (var_start_timer == false) {
+    if (varStartTimer === false) {
       return false;
     }
 
@@ -49,7 +56,7 @@ function start_time(duration) {
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
     if (--timer < 0) {
-      var_stop = true;
+      varStop = true;
       $(".waktu").html("WAKTU HABIS");
       clearInterval(interval);
     } else {
