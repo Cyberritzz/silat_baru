@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Penjurian Silat</title>
+    <style>
+        .nilai-box {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            margin: 5px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>Sudut Biru</h2>
+        <div class="kontingen_biru"></div>
+        <div class="nm_biru"></div>
+        <div id="nilai_biru"></div>
+        <div id="total_biru"></div>
+        <button onclick="tambahNilai('biru', 'Tendangan')">Tendangan (2)</button>
+        <button onclick="tambahNilai('biru', 'Pukulan')">Pukulan (1)</button>
+        <button onclick="hapusNilai('biru')">Hapus Nilai</button>
+        <button onclick="resetNilai('biru')">Reset</button>
+        <table class="table history-merah">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Nilai</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div>
+        <div class="kontingen_merah"></div>
+        <div class="nm_merah"></div>
+        <h2>Sudut Merah</h2>
+        <div id="nilai_merah"></div>
+        <div id="total_merah"></div>
+        <button onclick="tambahNilai('merah', 'Tendangan')">Tendangan (2)</button>
+        <button onclick="tambahNilai('merah', 'Pukulan')">Pukulan (1)</button>
+        <button onclick="hapusNilai('merah')">Hapus Pukulan (Merah)</button>
+        <button onclick="resetNilai('merah')">Reset</button>
+    </div>
+    <div>
+        <h2>Babak</h2>
+        <p id="babak">1</p>
+        <button onclick="selectBabak(1)">1</button>
+        <button onclick="selectBabak(2)">2</button>
+        <button onclick="selectBabak(3)">3</button>
+    </div>
+    <audio class="my_audio" controls preload="none" style="display:none;">
+        <source src="button.mp3" type="audio/mpeg">
+        <source src="button.ogg" type="audio/ogg">
+    </audio>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(".my_audio").trigger('load');
+
+        function play_audio(task) {
+            $(".my_audio").trigger('pause');
+            $(".my_audio").prop("currentTime", 0);
+
+            $(".my_audio").trigger('play');
+
+        }
+        var url_api = 'http://localhost/silat/nilai/api.php';
+        var babak_sekarang = 0;
+        var id_juri = window.localStorage.getItem('juri');
+        var id_partai = window.localStorage.getItem('partai');
+        var babak_active = 0;
+        var semua_babak = [1, 2, 3];
+        var total_nilai_merah = 0;
+        var urutanNilai = 0;
+        var total_button_merah = 0;
+        var total_nilai_biru = 0;
+        var total_button_biru = 0;
+        var done_biru = 0;
+        var done_merah = 0;
+
+        $('.nama_juri').html(window.localStorage.getItem('nama_juri'));
+
+
+        // Fungsi untuk mengambil informasi juri dan jadwal dari API
+        function getJuriDanJadwal() {
+            $.ajax({
+                url: url_api,
+                data: { a: 'jadwal', 'id_partai': id_partai },
+                type: "GET",
+                dataType: "json",
+                crossDomain: true,
+                success: function (obj) {
+                    $('.nm_merah').html(obj.nm_merah);
+                    $('.nm_biru').html(obj.nm_biru);
+
+                    $('.kontingen_merah').html(obj.kontingen_merah);
+                    $('.kontingen_biru').html(obj.kontingen_biru);
+                }
+            });
+        }
+
+        // Panggil fungsi untuk mengambil informasi juri dan jadwal saat halaman dimuat
+        getJuriDanJadwal();
+        var nilai = 0;
+        // Fungsi untuk menambah nilai ke sudut biru atau merah
+        function tambahNilai(sudut, button) {
+            play_audio('play');
+
+            if (babak_active == 0) {
+                alert('Babak harus dipilih');
+                return false;
+            }
+
+
+            switch (button) {
+                case 'Pukulan':
+                    nilai = 1;
+                    break;
+                case 'Tendangan':
+                    nilai = 2;
+                    break;
+                default:
+                    nilai = button;
+                    break;
+            }
+
+            var elem = document.getElementById("nilai_" + sudut);
+            var nilai_sekarang = elem.innerHTML;
+            elem.innerHTML += "<span class='nilai-box'>" + nilai + "</span>";
+
+            // Mengirim data ke server menggunakan AJAX
+            $.ajax({
+                url: url_api + "?a=submit_skor",
+                data: {
+                    'id_jadwal': id_partai,
+                    'id_juri': id_juri,
+                    'button': button,
+                    'nilai': nilai,
+                    'sudut': sudut,
+                    'babak': babak_active
+                },
+                type: "POST",
+                dataType: "json",
+                crossDomain: true,
+                success: function (response) {
+                    if (sudut == "merah") {
+                        total_nilai_merah += parseInt(nilai);
+                        $('#total_merah').html(total_nilai_merah);
+                    } else {
+                        total_nilai_biru += parseInt(nilai);
+                        $('#total_biru').html(total_nilai_biru);
+                    }
+                    // Handle respons dari server di sini
+                    console.log(response);
+                },
+                error: function (error) {
+                    // Handle kesalahan di sini
+                    console.error(error);
+                }
+            });
+        }
+        $(semua_babak).each(function (key_parent, v) {
+            $.ajax({
+                url: url_api,
+                data: { a: 'history', 'id_juri': id_juri, 'id_jadwal': id_partai, 'sudut': 'BIRU', 'babak': v },
+                type: "GET",
+                dataType: "json",
+                crossDomain: true,
+                success: function (obj) {
+
+                    var html_ = "";
+
+                    $(obj).each(function (key, value) {
+                        html_ += "<tr class=\"tr-" + value.id_nilai + "\"><td>" + (key + 1) + "</td><td>" + value.button + "</td><td>" + value.nilai + "</td><td><span class=\"btn btn-default btn-xs\" onclick=\"hapus_nilai(" + value.id_nilai + ", " + value.nilai + ", 'BIRU')\">HAPUS</span></td></tr>";
+
+                        total_nilai_biru += parseInt(value.nilai);
+                    });
+
+                    $('.history-biru tbody').append(html_);
+
+                    done_biru = 1;
+                }
+            });
+
+            // get history sudut merah
+            $.ajax({
+                url: url_api,
+                data: { a: 'history', 'id_juri': id_juri, 'id_jadwal': id_partai, 'sudut': 'MERAH', 'babak': v },
+                type: "GET",
+                dataType: "json",
+                crossDomain: true,
+                success: function (obj) {
+
+                    var html_ = "";
+
+                    $(obj).each(function (key, value) {
+                        html_ += "<tr class=\"tr-" + value.id_nilai + "\"><td>" + (key + 1) + "</td><td>" + value.button + "</td><td>" + value.nilai + "</td><td><span class=\"btn  btn-default btn-xs\"  onclick=\"hapus_nilai(" + value.id_nilai + ", " + value.nilai + ",'MERAH')\">HAPUS</span></td></tr>";
+
+                        total_nilai_merah += parseInt(value.nilai);
+                        urutanNilai = value.id_nilai
+
+                        console.log(urutanNilai);
+                    });
+
+                    $('.history-merah tbody').append(html_);
+
+                    done_merah = 1;
+
+                }
+            });
+        });
+        function hapusNilai(sudut, id_nilai) {
+            // Cek apakah ada nilai yang dapat dihapus di sisi klien
+            var elem = document.getElementById("nilai_" + sudut);
+            var nilai_boxes = elem.getElementsByClassName("nilai-box");
+
+            // Jika ada nilai yang dapat dihapus
+            if (nilai_boxes.length > 0) {
+                // Ambil nilai terakhir yang dimasukkan
+                var nilai_terakhir = nilai_boxes[nilai_boxes.length - 1].textContent;
+
+                // Kirim permintaan penghapusan ke server menggunakan AJAX
+                $.ajax({
+                    url: url_api, // Gantilah dengan URL server Anda
+                    data: {
+                        'a': 'hapus_nilai',
+                        'id_nilai': urutanNilai,
+                        'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
+                        'id_juri': id_juri, // Gantilah dengan id_juri yang sesuai
+                        'sudut': sudut,
+                        'babak': babak_active // Gantilah dengan babak yang sesuai
+                    },
+                    type: "GET",
+                    dataType: "json",
+                    crossDomain: true,
+                    success: function (response) {
+                        // Handle respons dari server
+                        if (response.status === 'success') {
+                            console.log("Data berhasil dihapus.");
+                            // Tampilkan notifikasi sukses di sini
+                            tampilkanNotifikasi("Data berhasil dihapus.");
+                            // Perbaikan: Hapus elemen HTML setelah data dihapus
+                            elem.removeChild(nilai_boxes[nilai_boxes.length - 1]);
+                        } else {
+                            console.error("Gagal menghapus data dari server.");
+                            // Tampilkan notifikasi gagal di sini
+                            tampilkanNotifikasi("Gagal menghapus data dari server.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle kesalahan di sini
+                        console.error("XHR Status: " + status);
+                        console.error("Error: " + error);
+                        // Tampilkan notifikasi kesalahan di sini
+                        tampilkanNotifikasi("Terjadi kesalahan saat menghapus data.");
+                    }
+                });
+            } else {
+                // Tampilkan notifikasi bahwa tidak ada data yang dapat dihapus
+                tampilkanNotifikasi("Tidak ada data yang dapat dihapus.");
+            }
+        }
+
+        // Fungsi untuk menampilkan notifikasi
+        function tampilkanNotifikasi(pesan) {
+            // Gantilah kode di bawah ini dengan cara yang sesuai untuk menampilkan notifikasi kepada pengguna.
+            alert(pesan);
+        }
+
+        // Fungsi untuk mereset nilai di sudut biru atau merah
+        function resetNilai(sudut) {
+            var elem = document.getElementById("nilai_" + sudut);
+            elem.innerHTML = "";
+        }
+
+        // Fungsi untuk memilih babak
+        function selectBabak(selectedBabak) {
+            babak_active = selectedBabak;
+            document.getElementById("babak").innerHTML = selectedBabak;
+            resetNilai('biru');
+            resetNilai('merah');
+        }
+
+        //Fungsi history
+    </script>
+</body>
+
+</html>
