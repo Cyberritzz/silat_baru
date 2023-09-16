@@ -105,32 +105,56 @@ if("" != $param)
 		break;
 		case "submit_skor":
 			
-			$id_jadwal 	= $_POST['id_jadwal'];
-			$id_juri 	= $_POST['id_juri'];
-			$button 	= $_POST['button'];
-			$nilai		= $_POST['nilai'];
-			$sudut 		= $_POST['sudut'];
-			$babak 		= $_POST['babak'];
-			
-			// INSERT INTO `nilai_tanding` (`id_nilai`, `id_jadwal`, `id_juri`, `button`, `nilai`, `sudut`, `babak`) VALUES (NULL, 'idpartaisaatlogin', 'juriyglogin', '1+1', '2', 'MERAH/BIRU', 'babakygaktif');
-			$result = mysqli_query($koneksi,"INSERT INTO nilai_tanding (id_nilai, id_jadwal, id_juri, button, nilai, sudut, babak) VALUES (NULL, '{$id_jadwal}','{$id_juri}','{$button}',{$nilai}, '{$sudut}','{$babak}')");
+					// Mengambil data dari permintaan POST
+		$id_jadwal = $_POST['id_jadwal'];
+		$id_juri = $_POST['id_juri'];
+		$button = $_POST['button'];
+		$nilai = $_POST['nilai'];
+		$sudut = $_POST['sudut'];
+		$babak = $_POST['babak'];
 
-			if($result)
-				echo json_encode(['message' => 'success']);
-			else
-				echo json_encode(['message' => 'error']);
+		// Membuat array asosiatif untuk menyimpan data
+		$data = [
+			"id_jadwal" => $id_jadwal,
+			"id_juri" => $id_juri,
+			"button" => $button,
+			"nilai" => $nilai,
+			"sudut" => $sudut,
+			"babak" => $babak
+		];
+
+		// Melakukan operasi penyimpanan ke database dengan data yang ada di dalam $data
+		$result = mysqli_query($koneksi, "INSERT INTO nilai_tanding (id_nilai, id_jadwal, id_juri, button, nilai, sudut, babak) VALUES (NULL, '{$data['id_jadwal']}', '{$data['id_juri']}', '{$data['button']}', {$data['nilai']}, '{$data['sudut']}', '{$data['babak']}')");
+
+		if ($result) {
+			echo json_encode(['message' => 'success', 'data' => $data]);
+		} else {
+			echo json_encode(['message' => 'error']);
+		}
+
 		break;
-		case "delete_nilai":
-			// get id_nilai
-			$id_nilai = $_GET['id_nilai'];
-
-			$result = mysqli_query($koneksi,"DELETE FROM nilai_tanding WHERE id_nilai={$id_nilai}");
+		case "hapus_nilai":
+		if ($_POST['a'] === 'hapus_skor') {
+			$sudut = $_GET['sudut'];
+			
+			// Perbaikan: Gunakan tanda '?' yang cukup untuk parameter placeholder dalam SQL
+			$result = mysqli_query($koneksi,"DELETE FROM nilai_tanding WHERE sudut={$sudut}");
 
 			if($result)
 				echo json_encode(['status' => 'success']);
 			else
 				echo json_encode(['status' => 'error']);
-		break;
+			
+			// Perbaikan: Bind parameter dengan tipe yang sesuai
+			
+			// Tutup koneksi database
+			$stmt->close();
+			$koneksi->close();
+		} else {
+			// Tindakan lainnya sesuai kebutuhan
+		}
+
+
 		case "get_data_view_tanding":
 			get_data_view_tanding();
 		break;
