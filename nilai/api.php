@@ -87,6 +87,7 @@ if("" != $param)
 			$id_jadwal 	= $_GET['id_jadwal'];
 			$sudut 		= $_GET['sudut'];
 			$babak 		= $_GET['babak'];
+			// $id_nilai	= $_GET['id_nilai'];
 			
 			$sql = mysqli_query($koneksi,"SELECT nilai_tanding.*, w.nm_juri FROM nilai_tanding inner join wasit_juri w on w.id_juri=nilai_tanding.id_juri  WHERE id_jadwal='{$id_jadwal}' AND nilai_tanding.id_juri='{$id_juri}' AND sudut='{$sudut}' AND babak='{$babak}' ORDER BY id_nilai DESC");
 
@@ -134,25 +135,29 @@ if("" != $param)
 
 		break;
 		case "hapus_nilai":
-		if ($_POST['a'] === 'hapus_skor') {
+		if ($_GET['a'] === 'hapus_nilai') {
+			$id_nilai = $_GET['id_nilai'];
 			$sudut = $_GET['sudut'];
 			
 			// Perbaikan: Gunakan tanda '?' yang cukup untuk parameter placeholder dalam SQL
-			$result = mysqli_query($koneksi,"DELETE FROM nilai_tanding WHERE sudut={$sudut}");
-
-			if($result)
+			$stmt = $koneksi->prepare("DELETE FROM nilai_tanding WHERE id_nilai=?");
+			$stmt->bind_param("i", $id_nilai); // Bind parameter dengan tipe yang sesuai (integer)
+	
+			if ($stmt->execute()) {
 				echo json_encode(['status' => 'success']);
-			else
+			} else {
 				echo json_encode(['status' => 'error']);
-			
-			// Perbaikan: Bind parameter dengan tipe yang sesuai
-			
-			// Tutup koneksi database
+			}
+	
+			// Tutup statement
 			$stmt->close();
-			$koneksi->close();
 		} else {
 			// Tindakan lainnya sesuai kebutuhan
 		}
+	
+		// Tutup koneksi database
+		$koneksi->close();
+		break;
 
 
 		case "get_data_view_tanding":
