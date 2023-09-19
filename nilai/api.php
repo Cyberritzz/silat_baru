@@ -105,21 +105,32 @@ if("" != $param)
 				echo json_encode([]);
 		break;
 		case "get_latest_id":
-			$id_jadwal = $_GET['id_jadwal'];
-
-			$sql = mysqli_query($koneksi,"SELECT MAX(id_nilai) as latest_id FROM nilai_tanding WHERE id_jadwal={$id_jadwal}");
-
-			// $exec = mysqli_query($koneksi,$sql);
-
-			$data = mysqli_fetch_assoc($sql);
-
-
-
-			if($data)
-				echo json_encode(['status' => 'success', 'data' => $data]);
-			else
-				echo json_encode(['status' => 'error']);
-		break;
+			if (isset($_GET['id_jadwal']) && isset($_GET['sudut'])) {
+				$id_jadwal = $_GET['id_jadwal'];
+				$sudut = $_GET['sudut'];
+		
+				// Create a prepared statement
+				$stmt = mysqli_prepare($koneksi, "SELECT MAX(id_nilai) as latest_id FROM nilai_tanding WHERE id_jadwal=? AND sudut=?");
+				if ($stmt) {
+					mysqli_stmt_bind_param($stmt, "is", $id_jadwal, $sudut);
+					mysqli_stmt_execute($stmt);
+					mysqli_stmt_bind_result($stmt, $latest_id);
+		
+					if (mysqli_stmt_fetch($stmt)) {
+						echo json_encode(['status' => 'success', 'data' => ['latest_id' => $latest_id]]);
+					} else {
+						echo json_encode(['status' => 'error']);
+					}
+		
+					mysqli_stmt_close($stmt);
+				} else {
+					echo json_encode(['status' => 'error']);
+				}
+			} else {
+				echo json_encode(['status' => 'error', 'message' => 'Missing parameters']);
+			}
+			break;
+		
 		case "submit_skor":
 			
 					// Mengambil data dari permintaan POST

@@ -126,7 +126,7 @@
 
             switch (button) {
                 case 'Pukulan':
-                    nilai = 1;
+                    nilai = 1; 
                     break;
                 case 'Tendangan':
                     nilai = 2;
@@ -137,6 +137,7 @@
             }
 
             var elem = document.getElementById("nilai_" + sudut);
+            console.log(sudut)
             var nilai_sekarang = elem.innerHTML;
             elem.innerHTML += "<span class='nilai-box'>" + nilai + "</span>";
 
@@ -192,13 +193,13 @@
                         if (sudut == "merah") {
                             total_nilai_merah += parseInt(value.nilai);
                             urutanNilai = value.id_nilai;
-                            getLatestId();
+                            getLatestId(sudut);
                             console.log(latestId);
                             console.log(typeof(value))
                         } else {
                             total_nilai_biru += parseInt(value.nilai);
                             urutanNilai = value.id_nilai;
-                            getLatestId();
+                            getLatestId(sudut);
                             console.log(latestId);
                             console.log(typeof(urutanNilai));
                         }
@@ -213,12 +214,16 @@
             });
         }
 
-        function getLatestId() {
+        function getLatestId(sudut, callback) {
+
+            console.log(sudut)
         $.ajax({
             url: url_api, // Gantilah dengan URL server Anda
             data: {
                 'a': 'get_latest_id',
                 'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
+                'sudut': sudut,
+                // 'id_juri': id_juri
             },
             type: "GET",
             dataType: "json",
@@ -227,6 +232,7 @@
                 if (response.status === 'success') {
                     latestId = response.data.latest_id;
                     console.log(latestId)
+                    callback(latestId)
                     // resolve(latestId);
                 } else {
                     console.log("Gagal mendapatkan ID terbaru dari server.");
@@ -239,59 +245,61 @@
 }
 
         function hapusNilai(sudut) {
-            getLatestId();
+            getLatestId(sudut, function(latestId) {
 
-            // Cek apakah ada nilai yang dapat dihapus di sisi klien
-            var elem = document.getElementById("nilai_" + sudut);
-            var nilai_boxes = elem.getElementsByClassName("nilai-box");
-
-            // Jika ada nilai yang dapat dihapus
-            if (nilai_boxes.length > 0) {
-                // Ambil nilai terakhir yang dimasukkan
-                var nilai_terakhir = nilai_boxes[nilai_boxes.length - 1].textContent;
-            
-                // Kirim permintaan penghapusan ke server menggunakan AJAX
-                $.ajax({
-                    url: url_api, // Gantilah dengan URL server Anda
-                    data: {
-                        'a': 'hapus_nilai',
-                        'id_nilai': latestId,
-                        'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
-                        'id_juri': id_juri, // Gantilah dengan id_juri yang sesuai
-                        'sudut': sudut,
-                        'babak': babak_active // Gantilah dengan babak yang sesuai
-                    },
-                    type: "GET",
-                    dataType: "json",
-                    crossDomain: true,
-                    success: function (response) {
-                        // Handle respons dari server
-                        if (response.status === 'success') {
-                            console.log("Data berhasil dihapus.");
-                            // Tampilkan notifikasi sukses di sini
-                            tampilkanNotifikasi("Data berhasil dihapus.");
-                            // Perbaikan: Hapus elemen HTML setelah data dihapus
-                            elem.removeChild(nilai_boxes[nilai_boxes.length - 1]);
-                            updateHistoryTable(id_juri, id_partai, sudut, babak_active);
-
-                        } else {
-                            console.error("Gagal menghapus data dari server.");
-                            // Tampilkan notifikasi gagal di sini
-                            tampilkanNotifikasi("Gagal menghapus data dari server.");
+                // Cek apakah ada nilai yang dapat dihapus di sisi klien
+                var elem = document.getElementById("nilai_" + sudut);
+                var nilai_boxes = elem.getElementsByClassName("nilai-box");
+    
+                // Jika ada nilai yang dapat dihapus
+                if (nilai_boxes.length > 0) {
+                    // Ambil nilai terakhir yang dimasukkan
+                    var nilai_terakhir = nilai_boxes[nilai_boxes.length - 1].textContent;
+                
+                    // Kirim permintaan penghapusan ke server menggunakan AJAX
+                    $.ajax({
+                        url: url_api, // Gantilah dengan URL server Anda
+                        data: {
+                            'a': 'hapus_nilai',
+                            'id_nilai': latestId,
+                            'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
+                            'id_juri': id_juri, // Gantilah dengan id_juri yang sesuai
+                            'sudut': sudut,
+                            'babak': babak_active // Gantilah dengan babak yang sesuai
+                        },
+                        type: "GET",
+                        dataType: "json",
+                        crossDomain: true,
+                        success: function (response) {
+                            // Handle respons dari server
+                            if (response.status === 'success') {
+                                console.log("Data berhasil dihapus.");
+                                // Tampilkan notifikasi sukses di sini
+                                tampilkanNotifikasi("Data berhasil dihapus.");
+                                // Perbaikan: Hapus elemen HTML setelah data dihapus
+                                elem.removeChild(nilai_boxes[nilai_boxes.length - 1]);
+                                updateHistoryTable(id_juri, id_partai, sudut, babak_active);
+    
+                            } else {
+                                console.error("Gagal menghapus data dari server.");
+                                // Tampilkan notifikasi gagal di sini
+                                tampilkanNotifikasi("Gagal menghapus data dari server.");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle kesalahan di sini
+                            console.error("XHR Status: " + status);
+                            console.error("Error: " + error);
+                            // Tampilkan notifikasi kesalahan di sini
+                            tampilkanNotifikasi("Terjadi kesalahan saat menghapus data.");
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle kesalahan di sini
-                        console.error("XHR Status: " + status);
-                        console.error("Error: " + error);
-                        // Tampilkan notifikasi kesalahan di sini
-                        tampilkanNotifikasi("Terjadi kesalahan saat menghapus data.");
-                    }
-                });
-            } else {
-                // Tampilkan notifikasi bahwa tidak ada data yang dapat dihapus
-                tampilkanNotifikasi("Tidak ada data yang dapat dihapus.");
-            }
+                    });
+                } else {
+                    // Tampilkan notifikasi bahwa tidak ada data yang dapat dihapus
+                    tampilkanNotifikasi("Tidak ada data yang dapat dihapus.");
+                }
+            });
+
         }
 
         // Fungsi untuk menampilkan notifikasi
