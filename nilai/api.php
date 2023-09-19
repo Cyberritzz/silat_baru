@@ -104,6 +104,22 @@ if("" != $param)
 			else
 				echo json_encode([]);
 		break;
+		case "get_latest_id":
+			$id_jadwal = $_GET['id_jadwal'];
+
+			$sql = mysqli_query($koneksi,"SELECT MAX(id_nilai) as latest_id FROM nilai_tanding WHERE id_jadwal={$id_jadwal}");
+
+			// $exec = mysqli_query($koneksi,$sql);
+
+			$data = mysqli_fetch_assoc($sql);
+
+
+
+			if($data)
+				echo json_encode(['status' => 'success', 'data' => $data]);
+			else
+				echo json_encode(['status' => 'error']);
+		break;
 		case "submit_skor":
 			
 					// Mengambil data dari permintaan POST

@@ -28,17 +28,7 @@
         <button onclick="tambahNilai('biru', 'Pukulan')">Pukulan (1)</button>
         <button onclick="hapusNilai('biru')">Hapus Nilai</button>
         <button onclick="resetNilai('biru')">Reset</button>
-        <table class="table history-merah">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Nilai</th>
-                    <th>#</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+
     </div>
     <div>
         <div class="kontingen_merah"></div>
@@ -50,6 +40,18 @@
         <button onclick="tambahNilai('merah', 'Pukulan')">Pukulan (1)</button>
         <button onclick="hapusNilai('merah')">Hapus Pukulan (Merah)</button>
         <button onclick="resetNilai('merah')">Reset</button>
+        <table class="table history-merah">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Nilai</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
     </div>
     <div>
         <h2>Babak</h2>
@@ -86,6 +88,7 @@
         var total_button_biru = 0;
         var done_biru = 0;
         var done_merah = 0;
+        var latestId = 0;
 
         $('.nama_juri').html(window.localStorage.getItem('nama_juri'));
 
@@ -161,6 +164,9 @@
                     }
                     // Handle respons dari server di sini
                     console.log(response);
+
+                    // Setelah berhasil menambahkan skor, perbarui tabel history
+                    updateHistoryTable(id_juri, id_partai, sudut, babak_active);
                 },
                 error: function (error) {
                     // Handle kesalahan di sini
@@ -168,57 +174,73 @@
                 }
             });
         }
-        $(semua_babak).each(function (key_parent, v) {
+
+
+        function updateHistoryTable(id_juri, id_partai, sudut, babak_active) {
             $.ajax({
                 url: url_api,
-                data: { a: 'history', 'id_juri': id_juri, 'id_jadwal': id_partai, 'sudut': 'BIRU', 'babak': v },
+                data: { a: 'history', 'id_juri': id_juri, 'id_jadwal': id_partai, 'sudut': sudut, 'babak': babak_active },
                 type: "GET",
                 dataType: "json",
                 crossDomain: true,
                 success: function (obj) {
-
                     var html_ = "";
 
                     $(obj).each(function (key, value) {
-                        html_ += "<tr class=\"tr-" + value.id_nilai + "\"><td>" + (key + 1) + "</td><td>" + value.button + "</td><td>" + value.nilai + "</td><td><span class=\"btn btn-default btn-xs\" onclick=\"hapus_nilai(" + value.id_nilai + ", " + value.nilai + ", 'BIRU')\">HAPUS</span></td></tr>";
+                        html_ += "<tr class=\"tr-" + value.id_nilai + "\"><td>" + (key + 1) + "</td><td>" + value.button + "</td><td>" + value.nilai + "</td><td><span class=\"btn btn-default btn-xs\" onclick=\"hapus_nilai(" + value.id_nilai + ", " + value.nilai + ", '" + sudut + "')\">HAPUS</span></td></tr>";
 
-                        total_nilai_biru += parseInt(value.nilai);
+                        if (sudut == "merah") {
+                            total_nilai_merah += parseInt(value.nilai);
+                            urutanNilai = value.id_nilai;
+                            getLatestId();
+                            console.log(latestId);
+                            console.log(typeof(value))
+                        } else {
+                            total_nilai_biru += parseInt(value.nilai);
+                            urutanNilai = value.id_nilai;
+                            getLatestId();
+                            console.log(latestId);
+                            console.log(typeof(urutanNilai));
+                        }
                     });
 
-                    $('.history-biru tbody').append(html_);
-
-                    done_biru = 1;
+                    if (sudut == "merah") {
+                        $('.history-merah tbody').html(html_);
+                    } else {
+                        $('.history-biru tbody').html(html_);
+                    }
                 }
             });
+        }
 
-            // get history sudut merah
-            $.ajax({
-                url: url_api,
-                data: { a: 'history', 'id_juri': id_juri, 'id_jadwal': id_partai, 'sudut': 'MERAH', 'babak': v },
-                type: "GET",
-                dataType: "json",
-                crossDomain: true,
-                success: function (obj) {
-
-                    var html_ = "";
-
-                    $(obj).each(function (key, value) {
-                        html_ += "<tr class=\"tr-" + value.id_nilai + "\"><td>" + (key + 1) + "</td><td>" + value.button + "</td><td>" + value.nilai + "</td><td><span class=\"btn  btn-default btn-xs\"  onclick=\"hapus_nilai(" + value.id_nilai + ", " + value.nilai + ",'MERAH')\">HAPUS</span></td></tr>";
-
-                        total_nilai_merah += parseInt(value.nilai);
-                        urutanNilai = value.id_nilai
-
-                        console.log(urutanNilai);
-                    });
-
-                    $('.history-merah tbody').append(html_);
-
-                    done_merah = 1;
-
+        function getLatestId() {
+        $.ajax({
+            url: url_api, // Gantilah dengan URL server Anda
+            data: {
+                'a': 'get_latest_id',
+                'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
+            },
+            type: "GET",
+            dataType: "json",
+            crossDomain: true,
+            success: function (response) {
+                if (response.status === 'success') {
+                    latestId = response.data.latest_id;
+                    console.log(latestId)
+                    // resolve(latestId);
+                } else {
+                    console.log("Gagal mendapatkan ID terbaru dari server.");
                 }
-            });
+            },
+            error: function (xhr, status, error) {
+                console.log("Terjadi kesalahan saat mengambil ID terbaru.");
+            }
         });
-        function hapusNilai(sudut, id_nilai) {
+}
+
+        function hapusNilai(sudut) {
+            getLatestId();
+
             // Cek apakah ada nilai yang dapat dihapus di sisi klien
             var elem = document.getElementById("nilai_" + sudut);
             var nilai_boxes = elem.getElementsByClassName("nilai-box");
@@ -227,13 +249,13 @@
             if (nilai_boxes.length > 0) {
                 // Ambil nilai terakhir yang dimasukkan
                 var nilai_terakhir = nilai_boxes[nilai_boxes.length - 1].textContent;
-
+            
                 // Kirim permintaan penghapusan ke server menggunakan AJAX
                 $.ajax({
                     url: url_api, // Gantilah dengan URL server Anda
                     data: {
                         'a': 'hapus_nilai',
-                        'id_nilai': urutanNilai,
+                        'id_nilai': latestId,
                         'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
                         'id_juri': id_juri, // Gantilah dengan id_juri yang sesuai
                         'sudut': sudut,
@@ -250,6 +272,8 @@
                             tampilkanNotifikasi("Data berhasil dihapus.");
                             // Perbaikan: Hapus elemen HTML setelah data dihapus
                             elem.removeChild(nilai_boxes[nilai_boxes.length - 1]);
+                            updateHistoryTable(id_juri, id_partai, sudut, babak_active);
+
                         } else {
                             console.error("Gagal menghapus data dari server.");
                             // Tampilkan notifikasi gagal di sini

@@ -351,6 +351,7 @@
                             html_ += "<tr class=\"tr-" + value.id_nilai + "\"><td>" + (key + 1) + "</td><td>" + value.button + "</td><td>" + value.nilai + "</td><td><span class=\"btn btn-default btn-xs\" onclick=\"hapus_nilai(" + value.id_nilai + ", " + value.nilai + ", 'BIRU')\">HAPUS</span></td></tr>";
 
                             total_nilai_biru += parseInt(value.nilai);
+                            urutanNilai = value.id_nilai
                         });
 
                         $('.history-biru tbody').append(html_);
