@@ -9,6 +9,21 @@ header('Access-Control-Allow-Origin: *');
 // get ACTION 
 $param = isset($_GET['a']) ? $_GET['a'] : ''; 
 
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["time"])) {
+    // Menerima waktu dari Page 1
+    $time = $_POST["time"];
+	$_SESSION["stored_time"] = $_POST["time"];
+    // Simpan waktu di server sesuai kebutuhan, misalnya dalam file atau database
+    // Di sini kita hanya mencetak waktu yang diterima
+    echo "Received time: " . $time;
+}
+
+
+if (isset($_SESSION["stored_time"])) {
+    echo $_SESSION["stored_time"];
+} else {
+    echo "No time received";
+}
 if("" != $param)
 {
 	switch($param)
@@ -104,6 +119,33 @@ if("" != $param)
 			else
 				echo json_encode([]);
 		break;
+		case "get_latest_id":
+			if (isset($_GET['id_jadwal']) && isset($_GET['sudut'])) {
+				$id_jadwal = $_GET['id_jadwal'];
+				$sudut = $_GET['sudut'];
+		
+				// Create a prepared statement
+				$stmt = mysqli_prepare($koneksi, "SELECT MAX(id_nilai) as latest_id FROM nilai_tanding WHERE id_jadwal=? AND sudut=?");
+				if ($stmt) {
+					mysqli_stmt_bind_param($stmt, "is", $id_jadwal, $sudut);
+					mysqli_stmt_execute($stmt);
+					mysqli_stmt_bind_result($stmt, $latest_id);
+		
+					if (mysqli_stmt_fetch($stmt)) {
+						echo json_encode(['status' => 'success', 'data' => ['latest_id' => $latest_id]]);
+					} else {
+						echo json_encode(['status' => 'error']);
+					}
+		
+					mysqli_stmt_close($stmt);
+				} else {
+					echo json_encode(['status' => 'error']);
+				}
+			} else {
+				echo json_encode(['status' => 'error', 'message' => 'Missing parameters']);
+			}
+			break;
+		
 		case "submit_skor":
 			
 					// Mengambil data dari permintaan POST

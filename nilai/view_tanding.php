@@ -1475,7 +1475,7 @@ $biruj5p1plus3 = mysqli_fetch_array($countbiruj5p1plus3);
 	<script type="text/javascript">
 		setInterval(function () {
 			$.ajax({
-				url: 'http://192.168.0.155/silat/nilai/api.php',
+				url: 'http://localhost/silat/nilai/api.php',
 				data: { 'a': 'get_data_view_tanding', 'id_partai': <?= $_GET["id_partai"] ?> },
 				type: "GET",
 				success: function (obj) {

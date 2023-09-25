@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page 1 - Timer Control</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var varStartTimer = true;
+        var varStop = false;
+        var interval = "";
+        var startTime = 0;
+        var currentTime = 0;
+
+        function resumeTime() {
+            if (varStop) {
+                return false;
+            }
+            if (varStartTimer) {
+                $('.btn-stop').html(' RESUME');
+                varStartTimer = false;
+                startTimer(currentTime);
+            } else {
+                varStartTimer = true;
+                $('.btn-stop').html(' PAUSE');
+            }
+        }
+
+        function stopTime() {
+            varStop = true;
+            $(".waktu").html("00:00");
+            clearInterval(interval);
+            sendTime("00:00");
+        }
+
+        function initStart() {
+            var durationInput = document.getElementById("durationInput");
+            var duration = parseInt(durationInput.value);
+
+            if (isNaN(duration) || duration <= 0) {
+                alert("Please enter a valid duration in seconds.");
+                return;
+            }
+
+            clearInterval(interval);
+            varStop = false;
+            varStartTimer = true;
+            startTime = duration;
+            startTimer(startTime);
+        }
+
+        function startTimer(duration) {
+            var timer = duration,
+                minutes, seconds;
+
+            interval = setInterval(function () {
+                if (varStop) {
+                    return false;
+                }
+
+                if (varStartTimer === false) {
+                    return false;
+                }
+
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                if (--timer < 0) {
+                    varStop = true;
+                    $(".waktu").html("WAKTU HABIS");
+                    clearInterval(interval);
+                    sendTime("00:00");
+                } else {
+                    currentTime = timer;
+                    $(".waktu").html(minutes + ":" + seconds);
+                    sendTime(formatTime(currentTime));
+                }
+            }, 1000);
+
+            sendTime(formatTime(startTime));
+        }
+
+        function formatTime(time) {
+            var minutes = parseInt(time / 60, 10);
+            var seconds = time % 60;
+            return `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+        }
+
+        function sendTime(time) {
+            // Menggunakan AJAX untuk mengirim waktu ke server PHP
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/silat/nilai/api.php", // Endpoint server untuk mengirim waktu
+                data: { time: time },
+                success: function (response) {
+                    // Respons dari server (tidak perlu melakukan apa pun di sini)
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Page 1 - Timer Control</h1>
+    <p>Waktu: <span class="waktu"></span></p>
+    <button class="btn-start" onclick="initStart()">Start</button>
+    <button class="btn-stop" onclick="resumeTime()">Pause</button>
+    <button class="btn-stop" onclick="stopTime()">Stop</button>
+    <input id="durationInput" type="number" placeholder="Enter duration in seconds" />
+</body>
+</html>
