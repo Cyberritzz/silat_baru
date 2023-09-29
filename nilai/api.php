@@ -9,21 +9,6 @@ header('Access-Control-Allow-Origin: *');
 // get ACTION 
 $param = isset($_GET['a']) ? $_GET['a'] : ''; 
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["time"])) {
-    // Menerima waktu dari Page 1
-    $time = $_POST["time"];
-	$_SESSION["stored_time"] = $_POST["time"];
-    // Simpan waktu di server sesuai kebutuhan, misalnya dalam file atau database
-    // Di sini kita hanya mencetak waktu yang diterima
-    echo "Received time: " . $time;
-}
-
-
-if (isset($_SESSION["stored_time"])) {
-    echo $_SESSION["stored_time"];
-} else {
-    echo "No time received";
-}
 if("" != $param)
 {
 	switch($param)
