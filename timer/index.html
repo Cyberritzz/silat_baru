@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Timer</h1>
+    <div id="timer"></div>
+    <div id="timerStatus"></div>
+    <button id="startTimer">Mulai Timer</button>
+    <button id="pauseTimer">Pause Timer</button>
+    <button id="stopTimer">Stop Timer</button>
+
+    <script>
+        var url_api = 'http://localhost/silat/nilai/api.php';
+        var timerValue = 300; // Durasi timer awal dalam detik (5 menit)
+        var timerInterval;
+        var timerRunning = false;
+
+        // Fungsi untuk menginisialisasi dan mengaktifkan timer
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            timerInterval = setInterval(function () {
+                if (timerRunning) {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    display.textContent = minutes + ":" + seconds;
+
+                    if (--timer < 0) {
+                        clearInterval(timerInterval);
+                        timer = duration;
+                    }
+                }
+            }, 1000);
+        }
+
+        // Panggil fungsi untuk memulai timer saat tombol "Mulai Timer" diklik
+        document.getElementById('startTimer').addEventListener('click', function () {
+            var display = document.querySelector('#timer');
+            startTimer(timerValue, display);
+            timerRunning = true;
+
+            // Kirim status timer "Berjalan" ke Halaman B menggunakan AJAX
+            $.ajax({
+                type: "POST",
+                url: url_api, // Gantilah dengan URL API yang sesuai
+                data: { timerStatus: "Berjalan" },
+                success: function (response) {
+                    console.log("Status timer telah dikirim: Berjalan");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Gagal mengirim status timer.");
+                }
+            });
+        });
+
+        // Panggil fungsi untuk memberhentikan timer saat tombol "Pause Timer" diklik
+        document.getElementById('pauseTimer').addEventListener('click', function () {
+            clearInterval(timerInterval);
+            timerRunning = false;
+
+            // Kirim status timer "Dijeda" ke Halaman B menggunakan AJAX
+            $.ajax({
+                type: "POST",
+                url: url_api, // Gantilah dengan URL API yang sesuai
+                data: { timerStatus: "Dijeda" },
+                success: function (response) {
+                    console.log("Status timer telah dikirim: Dijeda");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Gagal mengirim status timer.");
+                }
+            });
+        });
+
+        // Panggil fungsi untuk memberhentikan timer saat tombol "Stop Timer" diklik
+        document.getElementById('stopTimer').addEventListener('click', function () {
+            clearInterval(timerInterval);
+            var display = document.querySelector('#timer');
+            display.textContent = "00:00";
+            timerRunning = false;
+
+            // Kirim status timer "Berhenti" ke Halaman B menggunakan AJAX
+            $.ajax({
+                type: "POST",
+                url: url_api, // Gantilah dengan URL API yang sesuai
+                data: { timerStatus: "Berhenti" },
+                success: function (response) {
+                    console.log("Status timer telah dikirim: Berhenti");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Gagal mengirim status timer.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

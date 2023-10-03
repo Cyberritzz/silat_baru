@@ -1,95 +1,84 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
     <title>Penjurian Silat</title>
-    <style>
-        .nilai-box {
-            width: 50px;
-            height: 50px;
-            display: inline-block;
-            margin: 5px;
-            text-align: center;
-            font-size: 24px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            /* Gaya untuk tombol babak yang aktif */
-        }
-        .babak-button.active {
-            background-color: green; /* Warna latar belakang "menyala" */
-            color: white; /* Warna teks "menyala" */
-            /* Tambahan gaya lainnya sesuai kebutuhan */
-        }
-
-        /* Gaya untuk tombol babak yang tidak aktif */
-        .babak-button {
-            background-color: gray; /* Warna latar belakang tombol yang tidak aktif */
-            color: black; /* Warna teks tombol yang tidak aktif */
-            /* Tambahan gaya lainnya sesuai kebutuhan */
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div id="display-time"></div>
-    <h1>FORM INPUT JURI</h1>
-    <h2 class="nama_juri"></h2>
 
-    <a class="bt n btn-lg btn-primary btn-block" id="btn-selesai">Selesai</a>
-    <div>
-        <h2>Sudut Biru</h2>
-        <div class="kontingen_biru"></div>
-        <div class="nm_biru"></div>
-        <div id="nilai_biru"></div>
-        <div id="total_biru"></div>
-        <button onclick="tambahNilai('biru', 'Tendangan')">Tendangan (2)</button>
-        <button onclick="tambahNilai('biru', 'Pukulan')">Pukulan (1)</button>
-        <button onclick="hapusNilai('biru')">Hapus Nilai</button>
-        <button onclick="resetNilai('biru')">Reset</button>
-        <table class="table history-biru">
-            <thead>
-                <tr>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <div id="total_biru"></div>
+    <h1 class="text-center">FORM INPUT JURI</h1>
+    <h2 class="nama_juri text-center"></h2>
 
+    <a class="btn btn-lg btn-primary btn-block" style="border-radius: 0;" id="btn-selesai">Selesai</a>
 
-    </div>
-    <div>
-        <div class="kontingen_merah"></div>
-        <div class="nm_merah"></div>
-        <h2>Sudut Merah</h2>
-        <div id="nilai_merah"></div>
-        <div id="total_merah"></div>
-        <button onclick="tambahNilai('merah', 'Tendangan')">Tendangan (2)</button>
-        <button onclick="tambahNilai('merah', 'Pukulan')">Pukulan (1)</button>
-        <button onclick="hapusNilai('merah')">Hapus Pukulan (Merah)</button>
-        <button onclick="resetNilai('merah')">Reset</button>
-        <table class="table history-merah">
-            <thead>
-                <tr>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-
-    </div>
-    <div>
+    <div class="text-center">
         <h2>Babak</h2>
         <p id="babak">belum memilih</p>
-        <button id="babak-1-button" class="babak-button active" onclick="selectBabak(0)">Belum memilih babak</button>
-        <button id="babak-1-button" class="babak-button" onclick="selectBabak(1)">Babak 1</button>
-        <button id="babak-2-button" class="babak-button" onclick="selectBabak(2)">Babak 2</button>        
-        <button id="babak-3-button" class="babak-button" onclick="selectBabak(2)">Babak 2</button>        
+        <button id="babak-1-button" class="babak-button active btn btn-primary" onclick="selectBabak(0)">Belum memilih
+            babak</button>
+        <button id="babak-1-button" class="babak-button btn btn-info" onclick="selectBabak(1)">Babak 1</button>
+        <button id="babak-2-button" class="babak-button btn btn-info" onclick="selectBabak(2)">Babak 2</button>
+        <button id="babak-3-button" class="babak-button btn btn-info" onclick="selectBabak(2)">Babak 2</button>
+        <div id="timer" class="text-center">Loading...</div>
+        <!-- <div id="timerStatus"></div> -->
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="text-align: start;">
+                <h2 class="text-primary">Sudut Biru</h2>
+                <div class="kontingen_biru"></div>
+                <div class="nm_biru"></div>
+                <div id="nilai_biru" style="margin-top: 10px; margin-bottom: 10px;"></div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped history-biru">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <button class="btn btn-default" onclick="tambahNilai('biru', 'Tendangan')">Tendangan (2)</button>
+                <button class="btn btn-default" onclick="tambahNilai('biru', 'Pukulan')">Pukulan (1)</button>
+                <button class="btn btn-danger" onclick="hapusNilai('biru')">Hapus Nilai</button>
+                <button class="btn btn-warning" onclick="resetNilai('biru')">Reset</button>
+                <div class="total-biru" id="total_biru"></div>
+            </div>
+            <div class="col-md-6" style="text-align: end;">
+                <h2 class="text-danger">Sudut Merah</h2>
+                <div class="kontingen_merah"></div>
+                <div class="nm_merah"></div>
+                <div id="nilai_merah" style="margin-top: 10px; margin-bottom: 10px;"></div>
+                <div class="table-responsive">
+                    <table class="table table-bordered history-merah">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <button class="btn btn-default" onclick="tambahNilai('merah', 'Tendangan')">Tendangan (2)</button>
+                <button class="btn btn-default" onclick="tambahNilai('merah', 'Pukulan')">Pukulan (1)</button>
+                <button class="btn btn-danger" onclick="hapusNilai('merah')">Hapus Nilai</button>
+                <button class="btn btn-warning" onclick="resetNilai('merah')">Reset</button>
+                <div class="total-merah" id="total_merah"></div>
+            </div>
+        </div>
     </div>
     <audio class="my_audio" controls preload="none" style="display:none;">
         <source src="button.mp3" type="audio/mpeg">
         <source src="button.ogg" type="audio/ogg">
     </audio>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(".my_audio").trigger('load');
 
@@ -136,6 +125,7 @@
             });
         }
 
+
         // Panggil fungsi untuk mengambil informasi juri dan jadwal saat halaman dimuat
         getJuriDanJadwal();
         var nilai = 0;
@@ -151,7 +141,7 @@
 
             switch (button) {
                 case 'Pukulan':
-                    nilai = 1; 
+                    nilai = 1;
                     break;
                 case 'Tendangan':
                     nilai = 2;
@@ -200,7 +190,7 @@
                 }
             });
         }
-        
+
 
         function updateHistoryTable(id_juri, id_partai, sudut, babak_active) {
             $.ajax({
@@ -212,29 +202,29 @@
                 success: function (obj) {
                     var nilaiArray = []; // Membuat array untuk menyimpan nilai
                     var totalNilai = 0; // Variabel untuk menyimpan total nilai
-        
+
                     $(obj).each(function (key, value) {
                         nilaiArray.push(value.nilai); // Menyimpan nilai dalam array
-        
+
                         if (sudut == "merah") {
                             urutanNilai = value.id_nilai;
                             getLatestId(sudut);
-                            console.log(latestId);  
-                            console.log(typeof(value))
+                            console.log(latestId);
+                            console.log(typeof (value))
                         } else {
                             urutanNilai = value.id_nilai;
                             getLatestId(sudut);
                             console.log(latestId);
-                            console.log(typeof(urutanNilai));
+                            console.log(typeof (urutanNilai));
                         }
-        
+
                         // Menambahkan nilai ke total
                         totalNilai += parseInt(value.nilai);
                     });
-        
+
                     // Balik urutan nilai dalam array
                     nilaiArray.reverse();
-        
+
                     var nilaiHtml = nilaiArray.join(", "); // Menggabungkan nilai dalam array menjadi satu string dengan koma sebagai pemisah
                     var babakTitle = "Babak " + babak_active;
                     if (sudut == "merah") {
@@ -242,7 +232,7 @@
                         $('.history-merah tbody').html("<tr><td>" + nilaiHtml + "</td></tr>");
                         $('#total_merah').text(totalNilai);
                         done_merah = 1;
-                         // Perbarui total nilai merah
+                        // Perbarui total nilai merah
                     } else {
                         $('.history-biru thead tr th').text(babakTitle);
                         $('.history-biru tbody').html("<tr><td>" + nilaiHtml + "</td></tr>");
@@ -258,41 +248,43 @@
                 done_biru = 0;
             }
         }, 500);
-        
-        
-        
+
+
+
         function getLatestId(sudut, callback) {
 
             console.log(sudut)
-        $.ajax({
-            url: url_api, // Gantilah dengan URL server Anda
-            data: {
-                'a': 'get_latest_id',
-                'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
-                'sudut': sudut,
-                // 'id_juri': id_juri
-            },
-            type: "GET",
-            dataType: "json",
-            crossDomain: true,
-            success: function (response) {
-                if (response.status === 'success') {
-                    latestId = response.data.latest_id;
-                    console.log(latestId)
-                    callback(latestId)
-                    // resolve(latestId);
-                } else {
-                    console.log("Gagal mendapatkan ID terbaru dari server.");
+            $.ajax({
+                url: url_api, // Gantilah dengan URL server Anda
+                data: {
+                    'a': 'get_latest_id',
+                    'id_jadwal': id_partai, // Gantilah dengan id_jadwal yang sesuai
+                    'sudut': sudut,
+                    // 'id_juri': id_juri
+                },
+                type: "GET",
+                dataType: "json",
+                crossDomain: true,
+                success: function (response) {
+                    if (response.status === 'success') {
+                        latestId = response.data.latest_id;
+                        console.log(latestId)
+                        function callback(latestId) {
+                            console.log(latestId)
+                        }
+                        // resolve(latestId);
+                    } else {
+                        console.log("Gagal mendapatkan ID terbaru dari server.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("Terjadi kesalahan saat mengambil ID terbaru.");
                 }
-            },
-            error: function (xhr, status, error) {
-                console.log("Terjadi kesalahan saat mengambil ID terbaru.");
-            }
-        });
-}
+            });
+        }
 
         function hapusNilai(sudut) {
-            getLatestId(sudut, function(latestId) {
+            getLatestId(sudut, function (latestId) {
                 // Cek apakah ada nilai yang dapat dihapus di sisi klien
                 var elem = document.getElementById("nilai_" + sudut);
                 var nilai_boxes = elem.getElementsByClassName("nilai-box");
@@ -322,16 +314,16 @@
                                 console.log("Data berhasil dihapus.");
                                 // Tampilkan notifikasi sukses di sini
                                 tampilkanNotifikasi("Data berhasil dihapus.");
-                                
+
                                 // Perbaikan: Hapus elemen HTML setelah data dihapus
                                 elem.removeChild(nilai_boxes[nilai_boxes.length - 1]);
-                                
+
                                 // Perbarui total nilai sesuai dengan nilai yang dihapus
                                 var totalElem = document.getElementById("total_" + sudut);
                                 var totalNilai = parseInt(totalElem.textContent);
                                 totalNilai -= parseInt(nilai_terakhir);
                                 totalElem.textContent = totalNilai;
-                                
+
                                 // Perbarui tabel history
                                 updateHistoryTable(id_juri, id_partai, sudut, babak_active);
                             } else {
@@ -368,48 +360,40 @@
             elem.innerHTML = "";
         }
 
-        function selectBabak(selectedBabak) {
+        function selectBabak(selectedBabak, sudut) {
             // Hapus kelas "active" dari tombol babak yang saat ini aktif
             var babakButtonAktif = document.querySelector('.babak-button.active');
             if (babakButtonAktif) {
                 babakButtonAktif.classList.remove('active');
             }
-        
+
             // Tambahkan kelas "active" ke tombol babak yang baru dipilih
             var babakButtonBaru = document.getElementById("babak-" + selectedBabak + "-button");
             babakButtonBaru.classList.add('active');
-        
+
             // Setel babak_active ke babak yang baru dipilih
             babak_active = selectedBabak;
             document.getElementById("babak").innerHTML = selectedBabak;
-        
+
             // Reset nilai-nilai jika diperlukan
             resetNilai("merah");
             resetNilai("biru");
-        
+
             // Panggil updateHistoryTable dengan babak_active yang baru
             updateHistoryTable(id_juri, id_partai, sudut, babak_active);
         }
-        
+
+        $("#btn-selesai").click(function () {
+
+            if (confirm("Logout system ?")) {
+                window.location.replace('index.html');
+            }
+
+        });
+
         //Fungsi history
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Menggunakan AJAX untuk memperbarui waktu yang diterima dari server PHP
-        function updateDisplayTime() {
-            $.ajax({
-                type: "GET",
-                url: url_api, // Endpoint server untuk mengambil waktu
-                success: function (response) {
-                    console.log(response)
-                    $("#display-time").html(response);
-                }
-            });
-        }
 
-        // Memanggil fungsi pertama kali saat halaman dimuat
-        updateDisplayTime();
-    </script>
 </body>
 
 </html>

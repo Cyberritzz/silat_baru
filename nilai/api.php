@@ -9,6 +9,7 @@ header('Access-Control-Allow-Origin: *');
 // get ACTION 
 $param = isset($_GET['a']) ? $_GET['a'] : ''; 
 
+
 if("" != $param)
 {
 	switch($param)
